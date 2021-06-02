@@ -63,6 +63,13 @@ public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long id){
 	
 
 }
+@GetMapping("/find/{id}")
+
+public ResponseEntity<Departement> getDepartementById (@PathVariable("id") Long id ){
+	Departement departement = departementService.findDepartementById(id);
+	return new ResponseEntity<>(departement, HttpStatus.OK);
+}
+
 
 
 }

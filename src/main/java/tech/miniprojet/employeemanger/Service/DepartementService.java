@@ -33,9 +33,14 @@ public class DepartementService {
 		return departementRepo.save(departement);
 	}
 	
-	
+	public Departement findDepartementById(Long id) {
+        return departementRepo.findById(id).get();
+        		
+    }
 	public void deleteDepartement(Long id ) {
 		departementRepo.deleteDepartementById(id);
 	}
+	
+	
 	
 }

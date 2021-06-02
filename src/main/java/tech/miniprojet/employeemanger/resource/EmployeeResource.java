@@ -42,23 +42,31 @@ public class EmployeeResource  {
 	}
 	
 	@GetMapping("/find/{id}")
-	
 	public ResponseEntity<Employee> getEmployeeById (@PathVariable("id") Long id ){
 		Employee employee = employeeService.findEmployeeById(id);
 		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}
 	
-    @PostMapping("/add/{id}")
+   @PostMapping("/add/{id}")
 	public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee,@PathVariable("id") Long id ){
     	Employee newEmployee = employeeService.addEmployee(employee,id);
     	return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     	
 	}
+	
+	
     
-    
-    @PutMapping("/update")
-	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
-    	Employee  updateEmployee = employeeService.updateEmployee(employee);	
+    @PutMapping("/update/{id}")
+	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long id  ){
+    	Employee oldEmployee =employeeRepo.findById(id).get() ;
+    	
+    	oldEmployee.setDepartement(employee.getDepartement());
+    	oldEmployee.setEmail(employee.getEmail());
+    	oldEmployee.setImageUrl(employee.getImageUrl());
+    	oldEmployee.setJobTitle(employee.getJobTitle());
+    	oldEmployee.setName(employee.getName());
+    	
+    	Employee  updateEmployee = employeeService.updateEmployee(oldEmployee);	
     	return new ResponseEntity<>( updateEmployee, HttpStatus.OK);
     	
 	}
